@@ -12,9 +12,9 @@ from sklearn.utils.class_weight import compute_sample_weight
 
 
 # загрузка данных
-train = pd.read_csv('tests/train.csv', delimiter=',', header=0, index_col=False, engine='python', encoding='utf-8')
-test = pd.read_csv('tests/test.csv', delimiter=',', header=0, index_col=False, engine='python', encoding='utf-8')
-sub = pd.read_csv('tests/submission.csv', delimiter=',', header=0, index_col=False, engine='python', encoding='utf-8')
+train = pd.read_csv('tests/train.csv')
+test = pd.read_csv('tests/test.csv')
+sub = pd.read_csv('tests/submission.csv')
 
 X_train = train[['X1', 'X2', 'X3', 'X4', 'X5', 'X6', 'X7']]
 y_train = train['Y']
@@ -31,7 +31,7 @@ print(y_test.value_counts())
 sw = compute_sample_weight(class_weight='balanced', y=y_train)
 model = make_pipeline(
     StandardScaler(),
-    PolynomialFeatures(degree=2, include_bias=False),
+    PolynomialFeatures(degree=4, include_bias=False),
     StandardScaler(),
     RidgeClassifierCV(alphas=[0.0001, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0], cv=10)
 )
